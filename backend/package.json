@@ -1,0 +1,40 @@
+{
+  "name": "sallah-sanjal-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Sallah Sanjal - Professional services marketplace",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/scripts/seed.js",
+    "seed:comprehensive": "node src/scripts/seed-comprehensive.js",
+    "seed:images": "node seed-images.js",
+    "seed:categories": "node seed-categories.js",
+    "truncate:tables": "node truncate-tables.js",
+    "migrate:worker-extras": "node migrate-worker-profile-extras.js",
+    "test": "jest --detectOpenHandles"
+  },
+  "keywords": [
+    "marketplace",
+    "professionals",
+    "services"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.5",
+    "socket.io": "^4.7.2",
+    "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3"
+  }
+}
