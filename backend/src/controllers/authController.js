@@ -139,9 +139,4 @@ const verifyToken = async (req, res) => {
   }
 };
 
-module.exports = {
-  register,
-  login,
-  refreshAccessToken,
-  verifyToken,
-};
+
