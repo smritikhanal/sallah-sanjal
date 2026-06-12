@@ -22,6 +22,7 @@ export const useAuthStore = create((set) => ({
   },
   setLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
+  // Clear all auth state from memory and localStorage
   logout: () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
