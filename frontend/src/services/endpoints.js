@@ -1,7 +1,9 @@
 import apiClient from './api';
 import { useAuthStore } from '../utils/store';
 
+// =====================
 // Auth services
+// =====================
 export const authService = {
   register: (data) => apiClient.post('/auth/register', data),
   login: (email, password) => apiClient.post('/auth/login', { email, password }),
