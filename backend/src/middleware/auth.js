@@ -22,6 +22,7 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+// Restrict route access to specific roles: admin, worker, client
 const authorizeRole = (...allowedRoles) => {
   return (req, res, next) => {
     if (!req.user) {
