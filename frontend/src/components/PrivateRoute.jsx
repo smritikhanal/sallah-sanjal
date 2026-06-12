@@ -5,8 +5,7 @@ import { useAuthStore } from '../utils/store';
 const PrivateRoute = ({ children, roles }) => {
   const { user, accessToken } = useAuthStore();
 
-  // Require both a user profile and an access token.
-  // A stale user object without a token should not count as authenticated.
+  // Redirect to login if user has no token
   if (!user || !accessToken) {
     return <Navigate to="/login" replace />;
   }
