@@ -211,6 +211,10 @@ CREATE TABLE `testimonials` (
   KEY `idx_created_at` (`created_at`)
 );
 
+-- =====================
+-- Seed data
+-- =====================
+
 -- Insert sample service categories
 INSERT INTO `service_categories` (`name`, `description`, `icon`) VALUES
 ('Plumbing', 'Plumbing services and repairs', 'plumbing.svg'),
