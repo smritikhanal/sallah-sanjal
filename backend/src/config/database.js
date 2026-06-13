@@ -29,4 +29,5 @@ if (process.env.DATABASE_URL) {
   });
 }
 
+// Export pooled connection for use across the app
 module.exports = pool;
