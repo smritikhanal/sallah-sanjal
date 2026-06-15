@@ -100,7 +100,7 @@ const Login = () => {
               <p className="text-center text-xs text-neutral-600 mt-6 pb-5">
                 By signing in, you agree to our <a href="#" className="underline hover:text-neutral-800">Terms of Service</a> and <a href="#" className="underline hover:text-neutral-800">Privacy Policy</a>
               </p>
-              {/* Card */}
+              {/* Login form card */}
               <div
                 className="rounded-3xl p-8 md:p-10 shadow-2xl border border-white/30"
                 style={{

@@ -25,6 +25,7 @@ apiClient.interceptors.request.use(
 );
 
 // Handle token refresh
+// Attempt silent refresh on 401, then retry
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {

@@ -83,30 +83,30 @@ const login = async (req, res) => {
 };
 
 // Refresh token
-const refreshAccessToken = async (req, res) => {
-  try {
-    const { refreshToken } = req.body;
+// const refreshAccessToken = async (req, res) => {
+//   try {
+//     const { refreshToken } = req.body;
 
-    if (!refreshToken) {
-      return res.status(400).json({ error: 'Refresh token required' });
-    }
+//     if (!refreshToken) {
+//       return res.status(400).json({ error: 'Refresh token required' });
+//     }
 
-    const { verifyRefreshToken } = require('../utils/jwtUtils');
-    const decoded = verifyRefreshToken(refreshToken);
+//     const { verifyRefreshToken } = require('../utils/jwtUtils');
+//     const decoded = verifyRefreshToken(refreshToken);
 
-    if (!decoded) {
-      return res.status(401).json({ error: 'Invalid refresh token' });
-    }
+//     if (!decoded) {
+//       return res.status(401).json({ error: 'Invalid refresh token' });
+//     }
 
-    const newAccessToken = generateAccessToken(decoded.userId, decoded.role);
+//     const newAccessToken = generateAccessToken(decoded.userId, decoded.role);
 
-    res.json({
-      accessToken: newAccessToken,
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Token refresh failed', details: error.message });
-  }
-};
+//     res.json({
+//       accessToken: newAccessToken,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Token refresh failed', details: error.message });
+//   }
+// };
 
 // Verify token and return user info
 const verifyToken = async (req, res) => {
