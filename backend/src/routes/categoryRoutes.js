@@ -7,13 +7,13 @@ const {
 
 const router = express.Router();
 
-// Get all categories
+// GET /api/categories/all — List all service categories
 router.get('/all', getAllCategories);
 
-// Get category by ID
+// GET /api/categories/:categoryId — Get a single category
 router.get('/:categoryId', getCategoryById);
 
-// Get workers by category
+// GET /api/categories/:categoryId/workers — List workers in a category
 router.get('/:categoryId/workers', getWorkersByCategory);
 
 module.exports = router;
