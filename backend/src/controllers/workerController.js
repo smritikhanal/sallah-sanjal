@@ -1,5 +1,7 @@
 const pool = require('../config/database');
 
+// Worker controller — handles profile CRUD, search, bookings, reviews, testimonials
+
 // Get all workers with optional filtering
 const getAllWorkers = async (req, res) => {
   try {
