@@ -1,3 +1,5 @@
+// Worker dashboard with tabs for schedule, fees, messages, bookings, payment, testimonials, issues, and profile editing
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import ImageUploadModal from '../components/ImageUploadModal';
