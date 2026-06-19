@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { resolveMediaUrl } from '../utils/media';
 import { FaStar, FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaCheckCircle, FaShoppingCart, FaComments, FaChevronLeft, FaChevronRight, FaAward, FaFire, FaQuoteLeft, FaUsers } from 'react-icons/fa';
 
+// Worker profile detail page with services, reviews, and availability
+
 const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"%3E%3Crect fill="%23FFF8F0" width="800" height="600"/%3E%3Ccircle cx="400" cy="200" r="80" fill="%23D97706" opacity="0.2"/%3E%3Ctext x="400" y="350" font-size="48" fill="%23D97706" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-weight="bold"%3E%F0%9F%91%A4 Worker Profile%3C/text%3E%3C/svg%3E';
 
 const staticReviews = [

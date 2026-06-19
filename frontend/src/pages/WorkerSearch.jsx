@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { FaStar, FaMapMarkerAlt, FaChevronLeft, FaChevronRight, FaTimes, FaFilter } from 'react-icons/fa';
 import { resolveMediaUrl } from '../utils/media';
 
+// Worker search/browse page with category, location, rating, and price filters
+
 const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"%3E%3Crect fill="%23FFF8F0" width="600" height="400"/%3E%3Ccircle cx="300" cy="150" r="60" fill="%23D97706" opacity="0.2"/%3E%3Ctext x="300" y="280" font-size="32" fill="%23D97706" text-anchor="middle" dominant-baseline="middle" font-family="Arial" font-weight="bold"%3E%F0%9F%91%A4 Worker%3C/text%3E%3C/svg%3E';
 
 const WorkerSearch = () => {

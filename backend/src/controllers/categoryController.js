@@ -1,5 +1,7 @@
 const pool = require('../config/database');
 
+// Category controller — handles listing categories and workers by category
+
 // Get all service categories
 exports.getAllCategories = async (req, res) => {
   try {
