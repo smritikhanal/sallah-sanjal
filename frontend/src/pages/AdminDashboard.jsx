@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '../utils/store';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { adminService } from '../services/endpoints';
+import { adminService, adminCategoryService } from '../services/endpoints';
 const AdminDashboard = () => {
   
   const navigate = useNavigate();
@@ -281,6 +281,7 @@ const AdminDashboard = () => {
               { id: 'workers', label: 'Workers' },
               { id: 'clients', label: 'Clients' },
               { id: 'testimonials', label: 'Testimonials' },
+              { id: 'categories', label: 'Categories' },
               { id: 'settings', label: 'Settings' },
             ].map((tab) => (
               <button
@@ -818,6 +819,17 @@ const AdminDashboard = () => {
             )}
 
             {/* Analytics Tab */}
+            {/* Categories Tab */}
+            {activeTab === 'categories' && (
+              <div>
+                <h1 className="text-4xl font-black text-neutral-800 mb-8">Category Management</h1>
+                <p className="text-neutral-600 mb-6">Create, edit, or remove service categories.</p>
+                <div className="bg-white rounded-2xl p-6 shadow-md">
+                  <p className="text-sm text-neutral-500">Category management UI will go here. Admin can add, rename, or delete service categories.</p>
+                </div>
+              </div>
+            )}
+
             {activeTab === 'analytics' && (
               <div>
                 <h1 className="text-4xl font-black text-neutral-800 mb-8">Analytics & Reports</h1>

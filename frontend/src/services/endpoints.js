@@ -82,3 +82,10 @@ export const categoryService = {
   getAllCategories: () => apiClient.get('/categories/all'),
   getWorkersByCategory: (categoryId, params) => apiClient.get(`/categories/${categoryId}/workers`, { params }),
 };
+
+// Admin category management
+export const adminCategoryService = {
+  create: (data) => apiClient.post('/admin/categories', data),
+  update: (categoryId, data) => apiClient.put(`/admin/categories/${categoryId}`, data),
+  delete: (categoryId) => apiClient.delete(`/admin/categories/${categoryId}`),
+};
