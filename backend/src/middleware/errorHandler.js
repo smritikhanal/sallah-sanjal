@@ -1,3 +1,4 @@
+// Centralized error handler — catches all errors thrown in route handlers
 const errorHandler = (err, req, res, next) => {
   console.error(err);
 
