@@ -1,4 +1,4 @@
--- Add schedule, payment, and verification fields to worker_profiles
+-- Sprint 3: Extend worker_profiles with schedule, payment, and verification fields
 ALTER TABLE `worker_profiles` ADD COLUMN `qr_code` VARCHAR(255) DEFAULT NULL AFTER `is_verified`;
 ALTER TABLE `worker_profiles` ADD COLUMN `schedule_availability` TEXT NULL AFTER `qr_code`;
 ALTER TABLE `worker_profiles` ADD COLUMN `schedule_time` TEXT NULL AFTER `schedule_availability`;
