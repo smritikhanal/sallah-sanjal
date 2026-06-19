@@ -1,3 +1,5 @@
+// Landing page with hero, category carousel, top workers, stats, and testimonials
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../utils/store';
