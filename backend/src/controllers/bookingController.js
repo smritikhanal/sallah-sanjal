@@ -1,5 +1,7 @@
 const pool = require('../config/database');
 
+// Booking controller — create, list, update status, and get booking details
+
 // Create booking
 const createBooking = async (req, res) => {
   try {
