@@ -11,9 +11,13 @@ const router = express.Router();
 
 router.use(authMiddleware);
 
+// POST /api/bookings — Create a new booking
 router.post('/', createBooking);
+// GET /api/bookings — List current user's bookings (as client or worker)
 router.get('/', getUserBookings);
+// GET /api/bookings/:bookingId — Get a single booking's details
 router.get('/:bookingId', getBookingDetails);
+// PUT /api/bookings/:bookingId — Update booking status (accept/reject/complete/cancel)
 router.put('/:bookingId', updateBookingStatus);
 
 module.exports = router;
