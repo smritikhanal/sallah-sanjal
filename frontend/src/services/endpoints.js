@@ -66,14 +66,14 @@ export const chatService = {
   sendMessage: (conversationId, message) => apiClient.post(`/chat/${conversationId}/messages`, { message }),
 };
 
-// Client services
+// Client services — profile, bookings, and messages
 export const clientService = {
   getCurrentClientProfile: () => apiClient.get('/client/profile'),
   updateClientProfile: (data) => apiClient.put('/client/profile', data),
-getClientBookings: (params) => apiClient.get('/client/bookings', { params }),
+  getClientBookings: (params) => apiClient.get('/client/bookings', { params }),
   createBooking: (data) => apiClient.post('/bookings', data),
   getBookingDetails: (bookingId) => apiClient.get(`/bookings/${bookingId}`),
-  updateBookingStatus: (bookingId, data) => apiClient.patch(`/bookings/${bookingId}`, data),
+  updateBookingStatus: (bookingId, data) => apiClient.put(`/bookings/${bookingId}`, data),
   getClientMessages: () => apiClient.get('/client/messages'),
 };
 
