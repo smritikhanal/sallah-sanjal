@@ -1,5 +1,6 @@
 const express = require('express');
 const { authMiddleware, authorizeRole } = require('../middleware/auth');
+const { updateBookingStatus } = require('../controllers/bookingController');
 const {
   getAllWorkers,
   getWorkerProfile,
@@ -24,6 +25,8 @@ router.get('/all', getAllWorkers);
 router.get('/me', authMiddleware, authorizeRole('worker'), getCurrentWorkerProfile);
 // GET /api/workers/bookings — Worker's bookings
 router.get('/bookings', authMiddleware, authorizeRole('worker'), getWorkerBookings);
+// PATCH /api/workers/bookings/:bookingId — Worker updates booking status (accept/decline/complete)
+router.patch('/bookings/:bookingId', authMiddleware, authorizeRole('worker'), updateBookingStatus);
 // GET /api/workers/reviews — Worker's received reviews
 router.get('/reviews', authMiddleware, authorizeRole('worker'), getWorkerReviews);
 // GET /api/workers/testimonials — Worker's testimonials
