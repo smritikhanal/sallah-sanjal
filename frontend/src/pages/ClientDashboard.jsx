@@ -1,3 +1,5 @@
+// Client dashboard with overview, bookings, messages, and profile tabs
+
 import React, { useState, useEffect, useRef } from 'react';
 import Navbar from '../components/Navbar';
 import ImageUploadModal from '../components/ImageUploadModal';
