@@ -1,3 +1,5 @@
+// Full booking flow page with worker info, form, and success screen
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
