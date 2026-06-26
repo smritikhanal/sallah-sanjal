@@ -1,5 +1,7 @@
 const pool = require('../config/database');
 
+// Client controller — profile management, bookings, and messages
+
 // Get current client profile
 const getCurrentClientProfile = async (req, res) => {
   try {
