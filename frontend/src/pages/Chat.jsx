@@ -1,3 +1,5 @@
+// Real-time chat page for client-worker communication
+
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { useSocket } from '../hooks/useSocket';
