@@ -12,14 +12,15 @@ const router = express.Router();
 // All client routes require authentication
 router.use(authMiddleware);
 
-// Client profile
+// GET /api/client/profile — Current client's profile
 router.get('/profile', getCurrentClientProfile);
+// PUT /api/client/profile — Update client profile
 router.put('/profile', updateClientProfile);
 
-// Client bookings
+// GET /api/client/bookings — Client's booking history
 router.get('/bookings', getClientBookings);
 
-// Client messages/conversations
+// GET /api/client/messages — Client's conversations
 router.get('/messages', getClientMessages);
 
 module.exports = router;
