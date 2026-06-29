@@ -11,7 +11,7 @@ process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-key';
 
 const express = require('express');
 const authRoutes = require('../src/routes/authRoutes');
-const { errorHandler } = require('../src/middleware/errorHandler');
+const errorHandler = require('../src/middleware/errorHandler');
 
 // Create a test app with just the routes we need
 const createTestApp = () => {

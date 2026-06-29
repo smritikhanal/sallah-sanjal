@@ -7,9 +7,9 @@ process.env.JWT_ACCESS_SECRET = 'test-access-secret-key';
 process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-key';
 
 const express = require('express');
-const { authMiddleware } = require('../src/middleware/auth');
+
 const bookingRoutes = require('../src/routes/bookingRoutes');
-const { errorHandler } = require('../src/middleware/errorHandler');
+const errorHandler = require('../src/middleware/errorHandler');
 
 // Generate a valid test token for testing protected routes
 const { generateAccessToken } = require('../src/utils/jwtUtils');

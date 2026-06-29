@@ -8,7 +8,7 @@ process.env.JWT_REFRESH_SECRET = 'test-refresh-secret-key';
 
 const express = require('express');
 const reviewRoutes = require('../src/routes/reviewRoutes');
-const { errorHandler } = require('../src/middleware/errorHandler');
+const errorHandler = require('../src/middleware/errorHandler');
 
 // Generate a valid test token
 const { generateAccessToken } = require('../src/utils/jwtUtils');
