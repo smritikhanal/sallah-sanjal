@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
 const pool = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
+const { authLimiter, apiLimiter } = require('./middleware/rateLimiter');
 
 // Route imports
 const authRoutes = require('./routes/authRoutes');
@@ -27,10 +29,19 @@ const io = socketIo(server, {
   },
 });
 
-// Middleware
+// Security middleware
+app.use(helmet());
+
+// Rate limiting
+app.use('/api/auth', authLimiter);
+app.use('/api', apiLimiter);
+
+// CORS
 app.use(cors({
     origin: [process.env.SOCKET_IO_CORS_ORIGIN || 'http://localhost:5173','https://sallah-sanjal-mpki.vercel.app'],
 }));
+
+// Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
