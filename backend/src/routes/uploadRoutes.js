@@ -1,7 +1,11 @@
 const express = require('express');
+const { authMiddleware } = require('../middleware/auth');
 const { upload, uploadProfileImage } = require('../controllers/uploadController');
 
 const router = express.Router();
+
+// All upload routes require authentication
+router.use(authMiddleware);
 
 // POST /api/uploads/profile-image — Upload user profile picture
 router.post('/profile-image', upload.single('image'), uploadProfileImage);
