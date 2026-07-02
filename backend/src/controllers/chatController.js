@@ -6,6 +6,10 @@ const getOrCreateConversation = async (req, res) => {
     const { userId } = req.user;
     const { workerId, bookingId } = req.body;
 
+    if (!workerId) {
+      return res.status(400).json({ error: 'Worker ID is required' });
+    }
+
     // Get worker's user_id
     const [worker] = await pool.query(
       'SELECT user_id FROM worker_profiles WHERE id = ?',
