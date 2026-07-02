@@ -123,7 +123,14 @@ const Chat = () => {
                         Number(conversationId) === conv.id ? 'bg-orange-50 border-l-4 border-orange-500' : ''
                       }`}
                     >
-                      <p className="font-semibold text-neutral-800 truncate">{otherName}</p>
+                      <div className="flex justify-between items-start">
+                        <p className="font-semibold text-neutral-800 truncate">{otherName}</p>
+                        {conv.last_message_time && (
+                          <span className="text-xs text-neutral-400 flex-shrink-0 ml-2">
+                            {new Date(conv.last_message_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        )}
+                      </div>
                       {conv.last_message && (
                         <p className="text-sm text-neutral-500 truncate mt-1">{conv.last_message}</p>
                       )}
@@ -162,22 +169,38 @@ const Chat = () => {
                 <p className="text-gray-600 text-center mt-20">No messages yet. Send one below!</p>
               ) : (
                 <div className="space-y-4">
-                  {messages.map((msg, idx) => (
-                    <div
-                      key={msg.id || idx}
-                      className={`flex ${msg.sender === 'self' || msg.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}
-                    >
+                  {messages.map((msg, idx) => {
+                    const isOwn = msg.sender === 'self' || msg.sender_id === user?.id;
+                    const msgTime = msg.created_at || msg.createdAt;
+                    return (
                       <div
-                        className={`max-w-xs px-4 py-2 rounded-lg ${
-                          msg.sender === 'self' || msg.sender_id === user?.id
-                            ? 'bg-primary text-black'
-                            : 'bg-gray-200 text-gray-900'
-                        }`}
+                        key={msg.id || idx}
+                        className={`flex flex-col ${isOwn ? 'items-end' : 'items-start'}`}
                       >
-                        {msg.message || msg.text}
+                        {!isOwn && msg.first_name && (
+                          <span className="text-xs text-neutral-500 mb-1 ml-1">
+                            {msg.first_name} {msg.last_name}
+                          </span>
+                        )}
+                        <div className={`flex ${isOwn ? 'flex-row-reverse' : 'flex-row'} items-end gap-2`}>
+                          <div
+                            className={`max-w-xs px-4 py-2 rounded-lg ${
+                              isOwn
+                                ? 'bg-primary text-black'
+                                : 'bg-gray-200 text-gray-900'
+                            }`}
+                          >
+                            <p>{msg.message || msg.text}</p>
+                          </div>
+                          {msgTime && (
+                            <span className="text-xs text-neutral-400 flex-shrink-0">
+                              {new Date(msgTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                   <div ref={messagesEndRef} />
                 </div>
               )}
