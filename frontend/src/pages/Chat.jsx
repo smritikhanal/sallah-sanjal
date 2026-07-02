@@ -1,6 +1,6 @@
 // Real-time chat page for client-worker communication
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useSocket } from '../hooks/useSocket';
@@ -12,6 +12,7 @@ const Chat = () => {
   const { user } = useAuthStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const messagesEndRef = useRef(null);
   const { sendMessage } = useSocket(user?.id);
 
   // Fetch conversation messages on mount
@@ -24,10 +25,14 @@ const Chat = () => {
     }).catch(() => {});
   }, [conversationId]);
 
+  // Auto-scroll to bottom on new messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
       sendMessage(conversationId, inputMessage);
-      setMessages([...messages, { text: inputMessage, sender: 'self' }]);
       setInputMessage('');
     }
   };
@@ -46,20 +51,21 @@ const Chat = () => {
             <div className="space-y-4">
               {messages.map((msg, idx) => (
                 <div
-                  key={idx}
-                  className={`flex ${msg.sender === 'self' ? 'justify-end' : 'justify-start'}`}
+                  key={msg.id || idx}
+                  className={`flex ${msg.sender === 'self' || msg.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
                     className={`max-w-xs px-4 py-2 rounded-lg ${
-                      msg.sender === 'self'
+                      msg.sender === 'self' || msg.sender_id === user?.id
                         ? 'bg-primary text-black'
                         : 'bg-gray-200 text-gray-900'
                     }`}
                   >
-                    {msg.text}
+                    {msg.message || msg.text}
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
           )}
         </div>
