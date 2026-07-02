@@ -1,19 +1,32 @@
 // Real-time chat page for client-worker communication
 
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useSocket } from '../hooks/useSocket';
 import { useAuthStore } from '../utils/store';
+import { chatService } from '../services/endpoints';
 
 const Chat = () => {
+  const { conversationId } = useParams();
   const { user } = useAuthStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const { sendMessage } = useSocket(user?.id);
 
+  // Fetch conversation messages on mount
+  useEffect(() => {
+    if (!conversationId) return;
+    chatService.getConversationMessages(conversationId).then((res) => {
+      if (res.data?.messages) {
+        setMessages(res.data.messages);
+      }
+    }).catch(() => {});
+  }, [conversationId]);
+
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
-      sendMessage(1, inputMessage); // Placeholder conversation ID
+      sendMessage(conversationId, inputMessage);
       setMessages([...messages, { text: inputMessage, sender: 'self' }]);
       setInputMessage('');
     }
