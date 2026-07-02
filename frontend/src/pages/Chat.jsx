@@ -14,8 +14,10 @@ const Chat = () => {
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const typingTimeoutRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const { sendMessage } = useSocket(user?.id);
+  const { sendMessage, emitTyping, emitStopTyping, registerCallback, unregisterCallback } = useSocket(user?.id);
 
   // Fetch conversation list
   useEffect(() => {
@@ -36,10 +38,39 @@ const Chat = () => {
     }).catch(() => {});
   }, [conversationId]);
 
+  // Listen for typing events
+  useEffect(() => {
+    registerCallback('onUserTyping', (data) => {
+      if (data.conversationId === Number(conversationId)) {
+        setIsTyping(true);
+      }
+    });
+    registerCallback('onUserStopTyping', (data) => {
+      if (data.conversationId === Number(conversationId)) {
+        setIsTyping(false);
+      }
+    });
+    return () => {
+      unregisterCallback('onUserTyping');
+      unregisterCallback('onUserStopTyping');
+    };
+  }, [conversationId, registerCallback, unregisterCallback]);
+
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const handleTyping = () => {
+    if (!conversationId) return;
+    emitTyping(conversationId);
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+    typingTimeoutRef.current = setTimeout(() => {
+      emitStopTyping(conversationId);
+    }, 2000);
+  };
 
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
@@ -112,6 +143,13 @@ const Chat = () => {
                   <div ref={messagesEndRef} />
                 </div>
               )}
+              {isTyping && (
+                <div className="flex justify-start mt-2">
+                  <div className="bg-gray-200 text-gray-600 text-sm px-4 py-2 rounded-lg">
+                    <span className="animate-pulse">typing...</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Input Area */}
@@ -120,7 +158,10 @@ const Chat = () => {
                 <input
                   type="text"
                   value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
+                  onChange={(e) => {
+                    setInputMessage(e.target.value);
+                    handleTyping();
+                  }}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Type a message..."
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
