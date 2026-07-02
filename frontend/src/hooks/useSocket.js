@@ -93,6 +93,9 @@ export const useSocket = (userId, accessToken) => {
 
     return () => {
       // Don't disconnect on unmount to keep socket alive for other components
+      if (socket && socket.connected) {
+        socket.emit('user_leave', { userId, timestamp: new Date().toISOString() });
+      }
     };
   }, [userId, accessToken, addMessage, setMessages, setConversations]);
 
