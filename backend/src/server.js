@@ -70,6 +70,7 @@ const userSockets = {} // Map user IDs to socket IDs
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
+  // ------ Session management ------
   // User joins chat
   socket.on('user_join', (userId) => {
     userSockets[userId] = socket.id;
@@ -78,6 +79,7 @@ io.on('connection', (socket) => {
     console.log(`User ${userId} joined with socket ${socket.id}`);
   });
 
+  // ------ Messaging ------
   // Send message
   socket.on('send_message', async (data) => {
     try {
@@ -121,7 +123,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Typing indicator
+  // ------ Typing indicators ------
   socket.on('typing', (data) => {
     const { conversationId } = data;
     socket.to(`conversation_${conversationId}`).emit('user_typing', {
@@ -137,13 +139,13 @@ io.on('connection', (socket) => {
     });
   });
 
-  // Disconnect
+  // ------ Connection lifecycle ------
   socket.on('disconnect', () => {
     delete userSockets[socket.userId];
     console.log('User disconnected:', socket.id);
   });
 
-  // Error handling
+  // ------ Error handling ------
   socket.on('error', (error) => {
     console.error('Socket error:', error);
   });
