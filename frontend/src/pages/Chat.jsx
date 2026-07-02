@@ -15,27 +15,41 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [loadingConversations, setLoadingConversations] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [error, setError] = useState('');
   const typingTimeoutRef = useRef(null);
   const messagesEndRef = useRef(null);
   const { sendMessage, emitTyping, emitStopTyping, registerCallback, unregisterCallback } = useSocket(user?.id);
 
   // Fetch conversation list
   useEffect(() => {
+    setLoadingConversations(true);
     chatService.getUserConversations().then((res) => {
       if (res.data?.conversations) {
         setConversations(res.data.conversations);
       }
-    }).catch(() => {});
+    }).catch(() => {
+      setError('Failed to load conversations');
+    }).finally(() => {
+      setLoadingConversations(false);
+    });
   }, []);
 
   // Fetch conversation messages on mount
   useEffect(() => {
     if (!conversationId) return;
+    setLoadingMessages(true);
+    setError('');
     chatService.getConversationMessages(conversationId).then((res) => {
       if (res.data?.messages) {
         setMessages(res.data.messages);
       }
-    }).catch(() => {});
+    }).catch(() => {
+      setError('Failed to load messages');
+    }).finally(() => {
+      setLoadingMessages(false);
+    });
   }, [conversationId]);
 
   // Listen for typing events
@@ -87,7 +101,13 @@ const Chat = () => {
         <div className="flex-1 flex gap-4 overflow-hidden">
           {/* Conversation List Sidebar */}
           <div className="w-80 bg-white rounded-lg shadow-md overflow-y-auto flex-shrink-0">
-            {conversations.length === 0 ? (
+            {loadingConversations ? (
+              <div className="p-4 space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-16 bg-gray-100 rounded-lg animate-pulse" />
+                ))}
+              </div>
+            ) : conversations.length === 0 ? (
               <p className="text-gray-600 text-center p-4">No conversations yet</p>
             ) : (
               <div className="divide-y divide-gray-100">
@@ -118,10 +138,28 @@ const Chat = () => {
           <div className="flex-1 flex flex-col">
             {/* Messages Container */}
             <div className="flex-1 bg-white rounded-lg shadow-md p-6 mb-4 overflow-y-auto">
-              {!conversationId ? (
+              {error ? (
+                <div className="text-center mt-20">
+                  <p className="text-red-600 font-semibold">{error}</p>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="mt-4 text-orange-600 hover:underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : loadingMessages ? (
+                <div className="space-y-4 p-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className={`flex ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
+                      <div className="h-12 w-48 bg-gray-100 rounded-lg animate-pulse" />
+                    </div>
+                  ))}
+                </div>
+              ) : !conversationId ? (
                 <p className="text-gray-600 text-center mt-20">Select a conversation to start chatting</p>
               ) : messages.length === 0 ? (
-                <p className="text-gray-600 text-center mt-20">No messages yet</p>
+                <p className="text-gray-600 text-center mt-20">No messages yet. Send one below!</p>
               ) : (
                 <div className="space-y-4">
                   {messages.map((msg, idx) => (
@@ -143,7 +181,7 @@ const Chat = () => {
                   <div ref={messagesEndRef} />
                 </div>
               )}
-              {isTyping && (
+              {isTyping && !loadingMessages && (
                 <div className="flex justify-start mt-2">
                   <div className="bg-gray-200 text-gray-600 text-sm px-4 py-2 rounded-lg">
                     <span className="animate-pulse">typing...</span>
