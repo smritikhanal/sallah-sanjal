@@ -7,6 +7,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 
+// Top navigation bar with links, user menu, notifications, and role-based items
 const Navbar = () => {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();

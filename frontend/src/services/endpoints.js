@@ -24,7 +24,7 @@ export const adminService = {
   updateTestimonialVisibility: (testimonialId, data) => apiClient.patch(`/admin/testimonials/${testimonialId}/visibility`, data),
 };
 
-// Worker services
+// Worker services — profile, bookings, reviews, testimonials
 export const workerService = {
   getAllWorkers: (params) => apiClient.get('/workers/all', { params }),
   getWorkerProfile: (workerId) => apiClient.get(`/workers/${workerId}`),
@@ -66,19 +66,26 @@ export const chatService = {
   sendMessage: (conversationId, message) => apiClient.post(`/chat/${conversationId}/messages`, { message }),
 };
 
-// Client services
+// Client services — profile, bookings, and messages
 export const clientService = {
   getCurrentClientProfile: () => apiClient.get('/client/profile'),
   updateClientProfile: (data) => apiClient.put('/client/profile', data),
-getClientBookings: (params) => apiClient.get('/client/bookings', { params }),
+  getClientBookings: (params) => apiClient.get('/client/bookings', { params }),
   createBooking: (data) => apiClient.post('/bookings', data),
   getBookingDetails: (bookingId) => apiClient.get(`/bookings/${bookingId}`),
-  updateBookingStatus: (bookingId, data) => apiClient.patch(`/bookings/${bookingId}`, data),
+  updateBookingStatus: (bookingId, data) => apiClient.put(`/bookings/${bookingId}`, data),
   getClientMessages: () => apiClient.get('/client/messages'),
 };
 
-// Category services
+// Category services — list categories and workers by category
 export const categoryService = {
   getAllCategories: () => apiClient.get('/categories/all'),
   getWorkersByCategory: (categoryId, params) => apiClient.get(`/categories/${categoryId}/workers`, { params }),
+};
+
+// Admin category management
+export const adminCategoryService = {
+  create: (data) => apiClient.post('/admin/categories', data),
+  update: (categoryId, data) => apiClient.put(`/admin/categories/${categoryId}`, data),
+  delete: (categoryId) => apiClient.delete(`/admin/categories/${categoryId}`),
 };

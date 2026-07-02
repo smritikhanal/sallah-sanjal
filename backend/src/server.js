@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
 const pool = require('./config/database');
 const errorHandler = require('./middleware/errorHandler');
+const { authLimiter, apiLimiter } = require('./middleware/rateLimiter');
 
 // Route imports
 const authRoutes = require('./routes/authRoutes');
@@ -27,10 +29,19 @@ const io = socketIo(server, {
   },
 });
 
-// Middleware
+// Security middleware
+app.use(helmet());
+
+// Rate limiting
+app.use('/api/auth', authLimiter);
+app.use('/api', apiLimiter);
+
+// CORS
 app.use(cors({
     origin: [process.env.SOCKET_IO_CORS_ORIGIN || 'http://localhost:5173','https://sallah-sanjal-mpki.vercel.app'],
 }));
+
+// Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -59,6 +70,7 @@ const userSockets = {} // Map user IDs to socket IDs
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
+  // ------ Session management ------
   // User joins chat
   socket.on('user_join', (userId) => {
     userSockets[userId] = socket.id;
@@ -67,6 +79,7 @@ io.on('connection', (socket) => {
     console.log(`User ${userId} joined with socket ${socket.id}`);
   });
 
+  // ------ Messaging ------
   // Send message
   socket.on('send_message', async (data) => {
     try {
@@ -110,7 +123,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Typing indicator
+  // ------ Typing indicators ------
   socket.on('typing', (data) => {
     const { conversationId } = data;
     socket.to(`conversation_${conversationId}`).emit('user_typing', {
@@ -126,13 +139,13 @@ io.on('connection', (socket) => {
     });
   });
 
-  // Disconnect
+  // ------ Connection lifecycle ------
   socket.on('disconnect', () => {
     delete userSockets[socket.userId];
     console.log('User disconnected:', socket.id);
   });
 
-  // Error handling
+  // ------ Error handling ------
   socket.on('error', (error) => {
     console.error('Socket error:', error);
   });

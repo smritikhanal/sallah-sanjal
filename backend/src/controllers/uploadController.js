@@ -1,3 +1,5 @@
+// Upload controller — handles profile images, payment QR codes, and verification documents
+
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');

@@ -12,6 +12,11 @@ const {
   updateTestimonialVisibility,
   getAnalyticsTrends
 } = require('../controllers/adminController');
+const {
+  createCategory,
+  updateCategory,
+  deleteCategory
+} = require('../controllers/categoryController');
 
 const router = express.Router();
 
@@ -40,5 +45,10 @@ router.patch('/issues/:issueId', updateIssueStatus);
 
 // Testimonials management - protected write operations
 router.patch('/testimonials/:testimonialId/visibility', updateTestimonialVisibility);
+
+// Category management
+router.post('/categories', createCategory);
+router.put('/categories/:categoryId', updateCategory);
+router.delete('/categories/:categoryId', deleteCategory);
 
 module.exports = router;

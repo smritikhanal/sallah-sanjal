@@ -78,7 +78,7 @@ CREATE TABLE `worker_services` (
   KEY `idx_service_id` (`service_id`)
 );
 
--- Bookings table
+-- Sprint 4: Bookings table — client-to-worker booking records with status lifecycle
 CREATE TABLE `bookings` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `client_id` INT NOT NULL,

@@ -1,3 +1,5 @@
+// Booking form page — select date, time, duration, and submit a booking request
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useParams, useNavigate } from 'react-router-dom';

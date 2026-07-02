@@ -1,3 +1,5 @@
+// Alternative landing page with worker/category carousel and stats
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../utils/store';
