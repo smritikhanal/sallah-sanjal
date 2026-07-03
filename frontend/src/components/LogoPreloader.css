@@ -1,0 +1,304 @@
+/* Logo Preloader Container */
+.logo-preloader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #faf5f0 0%, #f5ede5 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* Logo Preloader */
+.logo-preloader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.logo-preloader--small {
+  width: 100px;
+  height: 100px;
+}
+
+.logo-preloader--medium {
+  width: 200px;
+  height: 200px;
+}
+
+.logo-preloader--large {
+  width: 300px;
+  height: 300px;
+}
+
+/* Background Logo */
+.logo-preloader__background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-preloader__background img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%);
+}
+
+/* Animated SVG Container */
+.logo-preloader__fill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 4px 12px rgba(217, 119, 6, 0.3));
+}
+
+.logo-preloader__logo-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 8px rgba(217, 119, 6, 0.2));
+  animation: logoScale 3s ease-in-out infinite;
+}
+
+/* Logo Scale Animation */
+@keyframes logoScale {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+/* Shimmer Effect */
+.logo-preloader__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Loading Text */
+.logo-preloader__text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #d97706;
+  margin-top: 1.5rem;
+  animation: textFadeInOut 2s ease-in-out infinite;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@keyframes textFadeInOut {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Pulsing Ring (Optional Enhancement) */
+.logo-preloader::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border: 3px solid rgba(217, 119, 6, 0.2);
+  border-radius: 50%;
+  animation: pulsRing 2s ease-out infinite;
+}
+
+@keyframes pulsRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 20px rgba(217, 119, 6, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
+  }
+}
+
+/* Rotating Ring (Optional Enhancement) */
+.logo-preloader::after {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border: 2px solid transparent;
+  border-top-color: #d97706;
+  border-right-color: #fc7404;
+  border-radius: 50%;
+  animation: rotateRing 3s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-preloader--large {
+    width: 200px;
+    height: 200px;
+  }
+
+  .logo-preloader__text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-preloader--medium {
+    width: 120px;
+    height: 120px;
+  }
+
+  .logo-preloader--large {
+    width: 150px;
+    height: 150px;
+  }
+
+  .logo-preloader__text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Alternative Vertical Fill Animation */
+.logo-preloader--vertical .logo-preloader__fill-rect {
+  animation: fillAnimationVertical 3s ease-in-out infinite;
+}
+
+@keyframes fillAnimationVertical {
+  0% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    opacity: 1;
+  }
+}
+
+/* Alternative Wave Animation */
+.logo-preloader--wave .logo-preloader__fill-rect {
+  animation: fillAnimationWave 3s ease-in-out infinite;
+}
+
+@keyframes fillAnimationWave {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow Effect */
+.logo-preloader {
+  filter: drop-shadow(0 0 10px rgba(217, 119, 6, 0.3));
+}
+
+.logo-preloader:hover {
+  filter: drop-shadow(0 0 20px rgba(217, 119, 6, 0.5));
+}
+
+/* Progress Indicator (if needed) */
+.logo-preloader__progress {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  height: 4px;
+  background: #f0f0f0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.logo-preloader__progress::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, #fc7404 0%, #d97706 50%, #fb7508 100%);
+  animation: progressMove 2s ease-in-out infinite;
+}
+
+@keyframes progressMove {
+  0% {
+    left: -30%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
