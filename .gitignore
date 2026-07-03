@@ -1,0 +1,22 @@
+./ALGORITHM_USER_FLOWS.MD
+backlog_plan.html
+client_secret_16500940294-oeckmtusmr11cc8ta131ch8lpq76a31g.apps.googleusercontent.com.json
+Procfile
+QUICK_START.md
+README.md
+Sallah Sanjal - User Stories and Script.csv
+script.docx
+survey methodology steps.txt
+User Persona.txt
+walkthrough_script.txt
+./backend/node_modules
+./frontend/node_modules
+.agent
+.vscode
+ALGORITHM_USER_FLOWS.md
+frontend/.env
+frontend/dist/
+frontend/node_modules/*
+google-forms-mcp/
+low fidility/
+~$script.docx
